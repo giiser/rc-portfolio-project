@@ -14,7 +14,7 @@ export function meta({}: Route.MetaArgs) {
 
 export async function loader({request}: Route.LoaderArgs):Promise<{projects: Project[]}> {
     try {
-        const response = await fetch('http://localhost:8000/projects');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/projects`);
         if (!response.ok) throw new Error('Failed to fetch projects');
         const data = await response.json();
         return {projects: Array.isArray(data) ? data : []};

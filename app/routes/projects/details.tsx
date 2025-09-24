@@ -4,7 +4,7 @@ import {FaArrowLeft} from "react-icons/fa";
 import {Link} from "react-router";
 
 export async function clientLoader ({request, params}:Route.ClientLoaderArgs): Promise<Project> {
-    const response = await fetch(`http://localhost:8000/projects/${params.id}`);
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/projects/${params.id}`);
     if (!response.ok) throw new Response('Project not found', {status: 404});
 
     const project:Project = await response.json();
@@ -24,6 +24,7 @@ const ProjectDetailsPage = ({loaderData}:Route.ComponentProps) => {
         <>
             <Link to={'/projects'} className="flex items-center text-blue-400 hover:text-blue-500 mb-6 transition">
                 <FaArrowLeft className="mr-2"/>
+                <p>Back to Projects</p>
             </Link>
             <div className="grid gap-8 md:grid-cols-2 items-start">
                 <div>
