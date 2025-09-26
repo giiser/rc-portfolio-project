@@ -3,7 +3,6 @@ import ProjectCard from "~/components/ProjectCard";
 
 type FeaturedProjectsProps = {
     projects: Project[];
-    count: number;
 }
 
 const FeaturedProjects = ({projects}:FeaturedProjectsProps) => {
