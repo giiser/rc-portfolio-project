@@ -8,6 +8,9 @@ const PostCard = ({post}:{post:PostMeta}) => {
             <p className="text-small text-gray-400 mb-2">
                 {new Date(post.date).toLocaleDateString('et-EE')}
             </p>
+            {post.image && (
+                <img src={post.image} alt={post.title} className="w-full h-48 object-cover rounded mb-4"/>
+            )}
             <p className="text-gray-300 mb-4">{post.excerpt}</p>
             <Link to={`/blog/${post.slug}`} className="text-blue-300 text-sm hover:underline">Read more →</Link>
         </article>

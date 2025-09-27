@@ -1,5 +1,5 @@
 import type {Route} from './+types/index';
-import type {PostMeta} from '~/types';
+import type {PostMeta, StrapiResponse, StrapiPost} from '~/types';
 import PostCard from '~/components/PostCard';
 import {useState} from "react";
 import Pagination from "~/components/Pagination";
@@ -9,19 +9,24 @@ import PostFilter from "~/components/PostFilter";
 
 export async function loader({request}:Route.LoaderArgs):Promise<{posts: PostMeta[]}> {
 
-    const url = new URL('/posts-meta.json', request.url);
-    const response = await fetch(url.href);
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/posts?populate=image&sort=date:desc`);
 
     if(!response.ok){
         throw new Response('Failed to fetch posts metadata', {status: 500});
     }
-    const data = await response.json();
 
-    data.sort((a: PostMeta, b: PostMeta) => {
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
-    })
+    const json:StrapiResponse<StrapiPost> = await response.json();
+    const posts = json.data.map(post => ({
+        id: post.id,
+        title: post.title,
+        excerpt: post.excerpt,
+        slug: post.slug,
+        date: post.date,
+        body: post.body,
+        image: post.image?.url ? `${import.meta.env.VITE_STRAPI_URL}${post.image.url}`:'/images/no-image.png',
+    }));
 
-    return {posts: data};
+    return {posts};
 }
 
 const BlogPage = ({loaderData}: Route.ComponentProps) => {
