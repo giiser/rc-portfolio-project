@@ -1,6 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import type {Route} from './+types/details';
-import type {PostMeta, StrapiPost, StrapiResponse} from "~/types";
+import type {Post, StrapiPost, StrapiResponse} from "~/types";
 import { Link } from 'react-router';
 
 export async function loader({request, params}:Route.LoaderArgs){
@@ -35,7 +35,7 @@ export async function loader({request, params}:Route.LoaderArgs){
 
 type BlogPostDetailsProps = {
     loaderData: {
-        post: PostMeta;
+        post: Post;
     }
 }
 

@@ -1,8 +1,8 @@
-import type {PostMeta} from "~/types";
+import type {Post} from "~/types";
 import {Link} from "react-router";
 
 type LatestPostsProps = {
-    posts: PostMeta[],
+    posts: Post[],
     limit?: number
 }
 

@@ -1,7 +1,7 @@
 import type { Route } from "./+types/index";
 import FeaturedProjects from "~/components/FeaturedProjects";
 import type {Project, StrapiPost, StrapiProject, StrapiResponse} from "~/types";
-import type {PostMeta} from "~/types";
+import type {Post} from "~/types";
 import AboutPreview from "~/components/AboutPreview";
 import LatestPosts from "~/components/LatestPosts";
 
@@ -12,7 +12,7 @@ export function meta({}: Route.MetaArgs) {
     ];
 }
 
-export async function loader({ request }: Route.LoaderArgs): Promise<{projects: Project[]; posts: PostMeta[]}> {
+export async function loader({ request }: Route.LoaderArgs): Promise<{projects: Project[]; posts: Post[]}> {
     try{
         const [projectRes, postRes] = await Promise.all([
             fetch(`${import.meta.env.VITE_API_URL}/projects?filters[featured][$eq]=true&populate=*`),
@@ -36,7 +36,7 @@ export async function loader({ request }: Route.LoaderArgs): Promise<{projects: 
             featured: item.featured
         }));
         const postJson:StrapiResponse<StrapiPost>= await postRes.json();
-        const posts:PostMeta[] = postJson.data.map(post => ({
+        const posts:Post[] = postJson.data.map(post => ({
             id: post.id,
             title: post.title,
             excerpt: post.excerpt,
