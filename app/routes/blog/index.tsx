@@ -23,7 +23,7 @@ export async function loader({request}:Route.LoaderArgs):Promise<{posts: Post[]}
         slug: post.slug,
         date: post.date,
         body: post.body,
-        image: post.image?.url ? `${import.meta.env.VITE_STRAPI_URL}${post.image.url}`:'/images/no-image.png',
+        image: post.image?.url ? `${post.image.url}`:'/images/no-image.png',
     }));
 
     return {posts};
